@@ -20,20 +20,45 @@ const server = new PServer({
     },
     templateExtensionName: ['.html'],
     mock: {
-        '/jjj': {
-            name: 'lingyun'
+        '/test': {
+            type: 'string',
+            content: '返回一个字符串'
         },
-        '/index.html': {
-            userList: [{
-                name: 'lngyn'
-            }]
+        '/test2': {
+            type: 'object',
+            content: {
+                name: '返回一个对象'
+            }
         },
-        '/lll': './config.json',
-        '/kkk': function() {
-            console.log(this);
-            return 'hahah';
+        '/test3': {
+            type: 'file',
+            content: './config.json' // 相对于根目录的文件地址，最终返回文件内容
         },
-        '/hjhjh': 'http://www.baidu.com'
+        '/test4': {
+            type: 'REQUEST_GET',
+            content: 'http://www.baidu.com', // 网址，返回get请求的内容
+            options: {
+                data: {
+                    name: '我是发送给对方服务器的参数'
+                }
+            }
+        },
+        '/test5': {
+            type: 'REQUEST_POST',
+            content: 'http://www.cometopostme.com/action.do', // 网址，返回post请求的内容，前提是人家支持获取数据哦
+            options: {
+                data: {
+                    name: '我是发送给对方的数据'
+                }
+            }
+        },
+        '/test6': {
+            type: 'function',
+            // 可以是函数，如果是函数的会执行函数然后获取结果返回
+            content: async function() {
+                return {}
+            }
+        }
     },
     control: {
         'getUserName': function() {}
@@ -43,6 +68,14 @@ const server = new PServer({
             userName: 'lingyun'
         }
     }
+});
+
+server.get('/kakaka', function() {
+    return '哈哈哈';
+});
+
+server.post('/hahah', async function() {
+    return 'biubiubiu';
 });
 
 ```
@@ -61,13 +94,13 @@ template > static > directory > get/post/all > mock
 
 - templateExtensionName: 模板文件的扩展名，按照我的道理讲，不是这个扩展名的文件统统都是静态文件处理，是这个扩展名的文件，统一按照模版文件处理。
 
-- mock: 接受一个对象，对于路径对应的不同的值类型，处理逻辑和优先级是这样的:
-    - 如果是字符串
-        - 先判断是不是一个http路径，如果是的话会请求这个路径，拿到返回值响应请求
-        - 如果不是http路径，判断是不是一个文件路径，如果是读取这个文件然后返回文件内容
-        - 如果不是文件，直接返回字符串
-    - 如果是一个对象，直接返回这个对象
-    - 如果是一个函数，执行这个函数，函数返回啥，咱就返回啥，这个函数的内部this指向server实例
+- mock: 接受一个对象，对象有type和content属性，type值有如下：
+    - string: 返回字符串
+    - object: 返回对象
+    - file: 返回模拟数据的文件地址，会require这个文件，拿到文件内容然后返回，所以这个文件必须是nodejs模块，或者json文件
+    - REQUEST_GET: 会去content内的地址模拟`get`请求拿到内容返回，并且会有一个额外的参数，options来代表发送给对方的参数
+    - REQUEST_POST: 回去content内的地址模拟`post`请求拿到内容返回，并且会有一个额外的参数，options来代表发送给对方的参数
+    - function: 会执行content的函数，拿到返回值返回，content函数必须是async函数，函数内部this指向PServer实例本身
 
 - ~~control: 接受一个对象。这个配置项还没有实现，我是想如果注册的时候  get/post/all 第二个参数是个字符串的话，可以直接匹配到control里对应的方法~~
 
@@ -116,8 +149,20 @@ this.static(staticFileAbsolutePath)
 
 ~~this.writeFile: 没实现，写文件，嫁接下fs的write方法，可能会提供异步/同步/promise等方式~~
 
-~~this.httpGet: 没实现，发送一个get请求~~
+this.httpGet(url, {data: {}, timeout: 3000})
 
-~~this.httpPost: 没实现，发送要一个post请求~~
+> 发送一个get请求，url是地址，data是发送的数据，timeout是超时的时间
+
+this.httpPost(url, {data: {}, timeout: 3000})
+
+> 发送一个post请求，url是地址，data是发送的数据，timeout是超时的时间
 
 ~~this.socket: 没实现，实现socket链接~~
+
+this.res
+
+> 这个是nodejs的response对象
+
+this.req
+
+> 这个是nodejs的request对象

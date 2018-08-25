@@ -15,6 +15,7 @@ const render = require('./render');
 const renderDirectory = require('./renderDirectory');
 const Router = require('./router');
 const static = require('./static');
+const mock = require('./mock');
 
 
 const defaultData = {
@@ -40,6 +41,7 @@ const middleWare = (pServer) => {
 
         // 存储一下当前请求的相关数据
         pServer.request = ctx.req;
+        pServer.response = ctx.res;
 
         // 文件或目录不存在一律视为异步或同步接口
         if (isPathExist === false) {
@@ -98,9 +100,13 @@ function PServer(options) {
     this.render = render;
     this.renderDirectory = renderDirectory;
     this.static = static;
+    this.mock = mock;
 
     this.app.listen(this.config.port);
     console.log(`open http://127.0.0.1:${this.config.port}`);
 }
+
+PServer.prototype.httpGet = tool.httpGet.bind(tool);
+PServer.prototype.httpPost = tool.httpPost.bind(tool);
 
 module.exports = PServer;

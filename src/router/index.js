@@ -10,12 +10,6 @@ module.exports = function(pServer) {
         all: {}
     };
 
-    // 提供给回调函数的假的返回值和状态码和类型
-    // 让用户感觉自己用了个真的 实际上并没有
-    this.body = '';
-    this.type = 'text/plain';
-    this.status = 200;
-
     this.process = async function(filepath) {
         let req = pServer.request;
 
@@ -28,19 +22,19 @@ module.exports = function(pServer) {
 
         if(callbacksList && callbacksList.length > 0) {
             let responseValue = [];
-            callbacksList.map(async (fn) => {
-                let returnValue = await fn.call(pServer);
-                responseValue.push(returnValue);
-            });
 
-            pServer.data.body = responseValue;
-            pServer.data.contentType = this.type;
-            pServer.data.status = this.status;
+            for(let i=0;i<callbacksList.length;i++) {
+                let returnValue = await callbacksList[i].call(pServer);
+                responseValue.push(returnValue);
+            }
+            
+            pServer.data.body = responseValue.length === 1 ? responseValue[0] : responseValue;
+            pServer.data.contentType = this.type || 'application/x-www-form-urlencoded';
+            pServer.data.status = this.status || 200;
         }
         else {
             // 此处采用mock
-            // await pServer.mock();
-            console.log('此处采用了mock处理');
+            await pServer.mock();
         }
 
     }.bind(this);
