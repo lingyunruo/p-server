@@ -7,8 +7,9 @@ module.exports = async function(filePath, data = {}) {
     let engine = this.config.engine;
     let url = this.request.url;
     let templateMap = this.config.templateData || {};
+    let templateFn = templateMap[url] || templateMap[url.substring(1)];
     
-    let configTemplateData = typeof templateMap[url] === 'function' && templateMap[url].call(this);
+    let configTemplateData = typeof templateFn === 'function' && templateFn.call(this);
 
     let finalData = Object.assign({}, configTemplateData || {}, data);
 
