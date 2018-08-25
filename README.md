@@ -51,8 +51,6 @@ const server = new PServer({
 
 template > static > directory > get/post/all > mock
 
-~~template的render里有一个奇怪的优先级是，模版数据的问题没有处理~~
-
 ### 参数解析：
 
 - port: 监听的端口, 默认值为9000
