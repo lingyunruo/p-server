@@ -155,6 +155,8 @@ this.static(staticFileAbsolutePath)
 
 ~~this.writeFile: 没实现，写文件，嫁接下fs的write方法，可能会提供异步/同步/promise等方式~~
 
+~~this.log: 没实现，需要实现错误日志之类的，不过这方面经验欠缺~~
+
 this.httpGet(url, {data: {}, timeout: 3000})
 
 > 发送一个get请求，url是地址，data是发送的数据，timeout是超时的时间，方法很简陋，有待完善
