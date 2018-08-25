@@ -37,6 +37,11 @@ const server = new PServer({
     },
     control: {
         'getUserName': function() {}
+    },
+    templateData: {
+        '/template/test.html': {
+            userName: 'lingyun'
+        }
     }
 });
 
@@ -69,6 +74,8 @@ template > static > directory > get/post/all > mock
 - ~~control: 接受一个对象。这个配置项还没有实现，我是想如果注册的时候  get/post/all 第二个参数是个字符串的话，可以直接匹配到control里对应的方法~~
 
 - ~~proxy: 想实现跟webpack-dev-serve一样的proxy功能~~
+
+- templateData: 每个模版请求需要的数据，需要对应上模版的请求路径
 
 
 ### 实例方法

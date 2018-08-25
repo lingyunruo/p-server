@@ -15,6 +15,13 @@ const server = new PServer({
         '/jjj': {
             name: 'lingyun'
         }
+    },
+    templateData: {
+        '/template/test.html': function() {
+            return {
+                userName: 'lingyun'
+            }
+        }
     }
 });
 

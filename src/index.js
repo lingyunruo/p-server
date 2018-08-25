@@ -80,7 +80,10 @@ function PServer(options) {
         engine: options.engine || {
             render: ejs.render
         },
-        templateExtensionName: options.templateExtensionName || ['.html']
+        templateExtensionName: options.templateExtensionName || ['.html'],
+        mock: options.mock || {},
+        control: options.control || {},
+        templateData: options.templateData || {}
     };
 
     this.data = {
