@@ -1,10 +1,3 @@
-
-/**
- * 
- * 简洁的配置优先，约定优先
- * 
-*/
-
 const path = require('path');
 const ejs = require('ejs');
 const Koa = require('koa');

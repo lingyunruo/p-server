@@ -1,10 +1,3 @@
-
-
-/*
-*
-* - render
-*
-* */
 const PServer = require('../src/index.js');
 
 const server = new PServer({
