@@ -11,6 +11,11 @@ const server = new PServer({
     port: 9000,
     root: __dirname,
     templateExtensionName: ['.html'],
+    // engine: {
+    //     render: async function(content, data) {
+    //         return content;
+    //     }
+    // },
     mock: {
         '/string': {
             type: 'string',

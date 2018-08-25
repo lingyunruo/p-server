@@ -18,12 +18,13 @@ module.exports = async function(filePath, data = {}) {
             encoding: 'utf-8'
         });
 
-        content = engine.render.call(this, content, finalData);
+        content = await engine.render.call(this, content, finalData);
 
         this.data.body = content;
         this.data.contentType = 'text/html';
     }
     catch(e) {
+        console.log(e);
         this.data.body = JSON.stringify(e);
         this.data.contentType = 'text/plain';
         this.data.status = 404;
