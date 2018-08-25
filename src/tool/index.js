@@ -54,6 +54,8 @@ module.exports = {
         }
     },
     request: function(url, method, options) {
+        // 这里可以拿到请求的头部，直接填充进去，
+        // 但是写累了，记录一下，回头在写
         let myUrl = new URL(url);
         let postData = JSON.stringify(options.data || {});
 
