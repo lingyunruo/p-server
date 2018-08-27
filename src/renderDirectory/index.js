@@ -21,7 +21,7 @@ catch(e) {
 module.exports = async function(filePath) {
 
     try {
-        const url = this.request.url;
+        const url = this.ctx.path;
 
         let fileList = fs.readdirSync(filePath);
 
@@ -38,9 +38,8 @@ module.exports = async function(filePath) {
             fileList: result
         });
 
-        this.data.body = content;
-        this.data.contentType = mime.getType('.html');
-        this.data.status = 200;
+        this.ctx.body = content;
+        this.ctx.contentType = mime.getType('.html');
     }
     catch(e) {
         console.log(`render directory error: ${e}`);

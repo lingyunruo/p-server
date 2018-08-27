@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-
+const mime = require('mime');
 
 module.exports = function(pServer) {
 
@@ -11,10 +11,11 @@ module.exports = function(pServer) {
     };
 
     this.process = async function(filepath) {
-        let req = pServer.request;
+        let ctx = pServer.ctx;
 
-        let method = req.method.toLowerCase();
-        let url = req.url;
+        let method = ctx.method.toLowerCase();
+        let url = ctx.path;
+        let query = ctx.query;
 
         let callbacksList = this.callbacks[method][url] || [];
 
@@ -24,13 +25,12 @@ module.exports = function(pServer) {
             let responseValue = [];
 
             for(let i=0;i<callbacksList.length;i++) {
-                let returnValue = await callbacksList[i].call(pServer);
+                let returnValue = await callbacksList[i].call(pServer, query);
                 responseValue.push(returnValue);
             }
             
-            pServer.data.body = responseValue.length === 1 ? responseValue[0] : responseValue;
-            pServer.data.contentType = this.type || 'application/x-www-form-urlencoded';
-            pServer.data.status = this.status || 200;
+            pServer.ctx.body = responseValue.length === 1 ? responseValue[0] : responseValue;
+            pServer.ctx.type = mime.getType('json');
         }
         else {
             // 此处采用mock

@@ -2,10 +2,11 @@ const fs = require('fs');
 const path = require('path');
 const mime = require('mime');
 
+// 渲染模版，给一个绝对路径，和需要渲染的数据，就直接响应模版了
 module.exports = async function(filePath, data = {}) {
-
+    
     let engine = this.config.engine;
-    let url = this.request.url;
+    let url = this.ctx.path;
     let templateMap = this.config.templateData || {};
     let templateFn = templateMap[url] || templateMap[url.substring(1)];
     
@@ -20,13 +21,13 @@ module.exports = async function(filePath, data = {}) {
 
         content = await engine.render.call(this, content, finalData);
 
-        this.data.body = content;
-        this.data.contentType = 'text/html';
+        this.ctx.body = content;
+        this.ctx.contentType = 'text/html';
     }
     catch(e) {
         console.log(e);
-        this.data.body = JSON.stringify(e);
-        this.data.contentType = 'text/plain';
-        this.data.status = 404;
+        this.ctx.body = JSON.stringify(e);
+        this.ctx.contentType = 'text/plain';
+        this.ctx.status = 404;
     }
 };

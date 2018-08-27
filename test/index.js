@@ -27,7 +27,7 @@ const server = new PServer({
         },
         '/function': {
             type: 'function',
-            content: function() {
+            content: function(query) {
                 return '我是一个函数返回的值'
             }
         },
@@ -50,7 +50,7 @@ const server = new PServer({
 });
 
 
-server.router.get('/jjj', async function() {
+server.router.get('/jjj', async function(query) {
     return 'async'
 });
 server.router.get('/lll', function() {

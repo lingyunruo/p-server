@@ -9,12 +9,12 @@ module.exports = async function(filePath) {
     try {
         let content = fs.readFileSync(filePath);
 
-        this.data.body = content;
-        this.data.contentType = mime.getType(filePath);
+        this.ctx.body = content;
+        this.ctx.type = mime.getType(filePath);
     }
     catch(e) {
-        this.data.body = JSON.stringify(e);
-        this.data.status = 404;
+        this.ctx.body = JSON.stringify(e);
+        this.ctx.status = 404;
     }
 
 }
