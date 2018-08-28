@@ -66,9 +66,7 @@ const server = new PServer({
             }
         }
     },
-    control: {
-        'getUserName': function() {}
-    },
+    controller: './controller',
     templateData: {
         '/template/test.html': {
             userName: 'lingyun'
@@ -108,7 +106,16 @@ template > static > directory > get/post/all > mock
     - REQUEST_POST: 回去content内的地址模拟`post`请求拿到内容返回，并且会有一个额外的参数，options来代表发送给对方的参数
     - function: 会执行content的函数，拿到返回值返回，content函数必须是async函数，函数内部this指向PServer实例本身
 
-- ~~control: 接受一个对象。这个配置项还没有实现，我是想如果注册的时候  get/post/all 第二个参数是个字符串的话，可以直接匹配到control里对应的方法~~
+- controller: 接收一个字符串，这个字符串是你controller的目录地址，服务器会在启动的时候自动读取这个地址里的js文件，然后把文件名字当作key值，挂载到server.controller 对象上，你可以在router里这样使用：
+```js
+// 注：server为PServer的实例
+// 假设项目根目录下有一个controller目录，目录下有一个getUser.js文件
+// getUser.js文件导出了一个 getName 函数方法
+// 方法的返回值就会是响应值
+// 可以参照test目录下的例子
+server.router.get('/getUser', server.controller.getUser.getName);
+```
+> 注意：因为router调用方法的时候会自动的将方法的上下文（this）绑定到server，所以如果你用了箭头函数，那么绑定会不成功。
 
 - ~~proxy: 想实现跟webpack-dev-serve一样的proxy功能~~
 

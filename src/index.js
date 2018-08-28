@@ -10,6 +10,8 @@ const Router = require('./router');
 const static = require('./static');
 const mock = require('./mock');
 
+const controller = require('./controller');
+
 
 const middleWare = (pServer) => {
 
@@ -78,7 +80,7 @@ function PServer(options) {
         // 模版的扩展名
         templateExtensionName: options.templateExtensionName || ['.html'],
         // 控制器
-        control: options.control || {},
+        controller: options.controller || {},
         // 模版的配置数据
         templateData: options.templateData || {}
     };
@@ -92,6 +94,9 @@ function PServer(options) {
     this.renderDirectory = renderDirectory;
     this.static = static;
     this.mock = mock;
+    
+    // 如果配置了controller，则初始化controller
+    controller.call(this);
 
     this.app.listen(this.config.port);
     console.log(`open http://127.0.0.1:${this.config.port}`);

@@ -46,7 +46,8 @@ const server = new PServer({
                 userName: 'lingyun'
             }
         }
-    }
+    },
+    controller: './controller'
 });
 
 
@@ -57,3 +58,4 @@ server.router.get('/lll', function() {
     return 'not async';
 });
 
+server.router.get('/getuser', server.controller.getUserName.getname);
