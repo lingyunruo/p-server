@@ -152,9 +152,9 @@ this.static(staticFileAbsolutePath)
 
 > 这个方法就是给一个静态文件，然后返回静态文件的内容，没有任何特别之处
 
-~~this.session: 这个方法还没实现，处理session的~~
+this.ctx.cookies:
 
-~~this.cookie: 这个方法也没实现，处理cookie的~~
+> 因为直接把koa的请求上下文对象挂载到实例上了，所以操作cookie可以直接调用koa的方法
 
 ~~this.localStore: 这个方法也没实现，而且在考虑需不需要~~
 
