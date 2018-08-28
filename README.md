@@ -74,12 +74,23 @@ const server = new PServer({
     }
 });
 
-server.get('/kakaka', function() {
+server.router.get('/kakaka', function() {
     return '哈哈哈';
 });
 
-server.post('/hahah', async function() {
+server.router.post('/hahah', async function() {
     return 'biubiubiu';
+});
+
+server.router.post('/getuse', async function() {
+
+    let result = await new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve('这是一个post请求');
+        }, 2000);
+    });
+    
+    return result;
 });
 
 ```
