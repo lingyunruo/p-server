@@ -59,3 +59,14 @@ server.router.get('/lll', function() {
 });
 
 server.router.get('/getuser', server.controller.getUserName.getname);
+
+server.router.post('/getuse', async function() {
+
+    let result = await new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve('这是一个post请求');
+        }, 2000);
+    });
+    
+    return result;
+});
