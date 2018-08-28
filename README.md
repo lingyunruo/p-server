@@ -185,6 +185,8 @@ this.httpPost(url, {data: {}, timeout: 3000})
 
 ~~this.socket: 没实现，实现socket链接~~
 
+~~this.exec: 执行一些脚本命令，简化一下执行命令行的操作，设想场景是服务器接收到某些请求后，执行某个编译命令~~
+
 this.res
 
 > 这个是nodejs的response对象
