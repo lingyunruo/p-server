@@ -63,7 +63,7 @@ const middleWare = (pServer) => {
     }
 }
 
-function PServer(options) {
+function PServer(options = {}) {
 
     // 基本的配置，有默认值也有用户的配置
     this.config = {

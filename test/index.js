@@ -17,7 +17,7 @@ const server = new PServer({
         'object': {
             type: 'object',
             content: {
-                name: 'lingyun',
+                name: '我是一个名字',
                 age: '18'
             }
         },
@@ -43,7 +43,7 @@ const server = new PServer({
     templateData: {
         '/template/test.html': function() {
             return {
-                userName: 'lingyun'
+                userName: '名字'
             }
         }
     },

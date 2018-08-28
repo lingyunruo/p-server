@@ -2,6 +2,6 @@
 
 module.exports = {
     getname: async function() {
-        return '我是凌云';
+        return '我是那个谁';
     }
 };
