@@ -194,3 +194,12 @@ this.res
 this.req
 
 > 这个是nodejs的request对象
+
+
+### 注意事项：
+
+> 因为是基于koa2实现，并且将koa2的上下文的ctx赋给了 PServer实例，所以一些功能和细节，都可以使用koa的API实现。
+
+> 第二点要注意的是，函数都用了async await函数，不过不用也行，还有要注意的是，controller和router的回调函数，都是以返回的值作为响应的值，直接设置ctx的body值并不能生效。
+
+> 不过这样结合，看起来有些怪怪的和乱乱的

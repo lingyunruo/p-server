@@ -23,11 +23,9 @@ module.exports = async function(filePath, data = {}) {
 
         this.ctx.body = content;
         this.ctx.contentType = 'text/html';
+        this.ctx.set('Cache-Control', 'no-cache');
     }
     catch(e) {
         console.log(e);
-        this.ctx.body = JSON.stringify(e);
-        this.ctx.contentType = 'text/plain';
-        this.ctx.status = 404;
     }
 };
