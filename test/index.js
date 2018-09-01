@@ -33,7 +33,7 @@ const server = new PServer({
         },
         'get': {
             type: 'REQUEST_GET',
-            content: 'http://www.baidu.com',
+            content: 'https://www.zhihu.com/',
             options: {
                 data: {},
                 timeout: 3000

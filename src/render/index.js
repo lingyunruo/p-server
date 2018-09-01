@@ -27,5 +27,8 @@ module.exports = async function(filePath, data = {}) {
     }
     catch(e) {
         console.log(e);
+        this.ctx.body = e;
+        this.ctx.contentType = mime.getType('text/plain');
+        this.ctx.status = 404;
     }
 };

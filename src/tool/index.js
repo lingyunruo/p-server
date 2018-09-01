@@ -61,11 +61,7 @@ module.exports = {
 
         let customOptions = {
             method: method || 'GET',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Content-Length': Buffer.byteLength(postData),
-                "User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"
-            },
+            headers: options.headers,
             timeout: options.timeout || 10000
         };
 
@@ -75,13 +71,19 @@ module.exports = {
 
         return new Promise(function(resolve, reject) {
             let body = '';
+
             const req = httpObj.request(reqOptions, function(res) {
                 res.setEncoding('utf8');
+
                 res.on('data', function(chunk) {
                     body = body + chunk;
                 });
+                
                 res.on('end', function() {
-                    resolve(body);
+                    resolve({
+                        body: body,
+                        headers: res.headers
+                    });
                 });
             });
 

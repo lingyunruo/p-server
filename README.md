@@ -97,7 +97,7 @@ server.router.post('/getuse', async function() {
 
 ### 请求处理优先级顺序
 
-template > static > directory > get/post/all > mock
+template --> static --> directory --> router --> mock
 
 ### 参数解析：
 

@@ -33,30 +33,30 @@ const middleWare = (pServer) => {
         // 如果存在路径，判断路径是文件还是目录
         let pathType = isPathExist && await tool.getPathType(absolutePath);
         
+        let isFile = path.extname(absolutePath) !== '';
+
         // 将koa的ctx挂在到pServer上
         pServer.ctx = ctx;
 
-        // 文件或目录不存在一律视为异步或同步接口
-        if (isPathExist === false) {
-            // 路径不存在就走路由处理
-            await pServer.router.process(absolutePath);
-        }
-        // 如果是文件就按照模版或者静态文件处理
-        else if (pathType === 'file') {
+        // 如果是文件
+        if(isFile) {
             // 模版解析
             if (templateExtensionName.indexOf(pathExtensionName) >= 0) {
                 // 直接渲染
                 await pServer.render(absolutePath);
             }
-            // 如果不是模版后缀的文件，一律按照静态文件处理
             else {
                 // 直接读取静态文件
                 await pServer.static(absolutePath);
             }
         }
         // 如果是目录，则输出目录
-        else if (pathType === 'directory') {
+        else if (isPathExist && pathType === 'directory') {
             await pServer.renderDirectory(absolutePath);
+        }
+        else {
+            // 路径不存在就走路由处理
+            await pServer.router.process(absolutePath);
         }
 
         await next();
