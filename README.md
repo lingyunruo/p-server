@@ -68,8 +68,13 @@ const server = new PServer({
     },
     controller: './controller',
     templateData: {
-        '/template/test.html': {
-            userName: 'lingyun'
+        '/template/test.html': function() {
+            return {
+                data: {
+                    name: '名字'
+                },
+                headers: {}
+            }
         }
     }
 });
@@ -135,7 +140,7 @@ server.router.get('/getUser', server.controller.getUser.getName);
 
 ### 实例方法
 
-this.render(absoluteFilePath, data)
+this.render(absoluteFilePath, data, header)
 
 > 讲道理这个方法返回编译后的模版字符串
 

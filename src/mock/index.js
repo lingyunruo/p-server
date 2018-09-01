@@ -31,6 +31,7 @@ module.exports = async function() {
             case 'string': 
             case 'object': 
                 finalReturn = mockContent;
+                this.ctx.type = mime.getType('json');
                 break;
             case 'file':
                 let absolutePath = path.join(root, mockContent); 

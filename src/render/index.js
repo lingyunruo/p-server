@@ -3,7 +3,7 @@ const path = require('path');
 const mime = require('mime');
 
 // 渲染模版，给一个绝对路径，和需要渲染的数据，就直接响应模版了
-module.exports = async function(filePath, data = {}) {
+module.exports = async function(filePath, data = {}, headers = {}) {
     
     let engine = this.config.engine;
     let url = this.ctx.path;
@@ -12,7 +12,8 @@ module.exports = async function(filePath, data = {}) {
     
     let configTemplateData = typeof templateFn === 'function' && templateFn.call(this);
 
-    let finalData = Object.assign({}, configTemplateData || {}, data);
+    let finalData = Object.assign({}, configTemplateData.data || {}, data);
+    let finalHeader = Object.assign({}, configTemplateData.headers || {}, headers);
 
     try {
         let content = fs.readFileSync(filePath, {
@@ -21,9 +22,11 @@ module.exports = async function(filePath, data = {}) {
 
         content = await engine.render.call(this, content, finalData);
 
+        this.ctx.res.writeHeader(200, {
+            ...finalHeader,
+            'Content-Type': 'text/html'
+        });
         this.ctx.body = content;
-        this.ctx.contentType = 'text/html';
-        this.ctx.set('Cache-Control', 'no-cache');
     }
     catch(e) {
         console.log(e);

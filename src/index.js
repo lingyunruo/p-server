@@ -10,6 +10,8 @@ const Router = require('./router');
 const static = require('./static');
 const mock = require('./mock');
 
+const {defaultHeaders} = require('./contants');
+
 const controller = require('./controller');
 
 
@@ -43,7 +45,7 @@ const middleWare = (pServer) => {
             // 模版解析
             if (templateExtensionName.indexOf(pathExtensionName) >= 0) {
                 // 直接渲染
-                await pServer.render(absolutePath);
+                await pServer.render(absolutePath, {}, defaultHeaders);
             }
             else {
                 // 直接读取静态文件

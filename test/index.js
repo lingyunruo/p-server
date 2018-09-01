@@ -33,7 +33,7 @@ const server = new PServer({
         },
         'get': {
             type: 'REQUEST_GET',
-            content: 'https://www.zhihu.com/',
+            content: 'https://www.baidu.com/',
             options: {
                 data: {},
                 timeout: 3000
@@ -43,7 +43,10 @@ const server = new PServer({
     templateData: {
         '/template/test.html': function() {
             return {
-                userName: '名字'
+                data: {
+                    userName: '名字'
+                },
+                headers: {}
             }
         }
     },
