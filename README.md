@@ -1,10 +1,8 @@
 ### 简介
 
-> 这是一个基于koa实现的一个为开发环境准备的服务器，总的来说，还是有些简陋，大概实现的功能有：1、定制模版引擎，2、多格式模拟数据，3、可以自定义get/post/all请求，4、自动的列出服务器文件列表，5、静态文件也可以传输，6、服务器端模拟请求抓取别人的接口或者页面(比较简陋)，7、剩下的没实现。整体来说功能有了，但是功能的实现比较简陋，估计容错性是不高的，只能是之后用起来看看了。不过，这个倒是可以让搭建开发服务器简单了很多，如果只有基本需求，基本只需要实例化一个对象，传入一些参数，就可以跑起来服务器了。即使不传任何参数也能正常跑起来。各种资源和请求的响应头设置有些混乱，有待优化加强。
+> 基于koa2开发的服务器。定位是提供给开发人员使用的本地开发服务器。原则是只需要少量配置，即可正常访问页面和目录，并且可以模拟请求数据。同时提供controller，路由，模版数据配置，等略微高级一点点的功能。当前对于请求的处理并不够完善。基本使用没有问题。容错性不高。
 
 ### 以下删除线的都是没实现的
-
-### 对于http请求的处理还是不够完善，回头会给补上的
 
 ### 使用环境 
 
@@ -21,71 +19,66 @@ const PServer = require('../src/index.js');
 const server = new PServer({
     port: 9000,
     root: __dirname,
-    engine: {
-        render: async function(content, data) {}
-    },
     templateExtensionName: ['.html'],
+    // engine: {
+    //     render: async function(content, data) {
+    //         return content;
+    //     }
+    // },
     mock: {
-        '/test': {
+        '/string': {
             type: 'string',
-            content: '返回一个字符串'
+            content: '我是一个字符串'
         },
-        '/test2': {
+        'object': {
             type: 'object',
             content: {
-                name: '返回一个对象'
+                name: '我是一个名字',
+                age: '18'
             }
         },
-        '/test3': {
-            type: 'file',
-            content: './config.json' // 相对于根目录的文件地址，最终返回文件内容
+        '/file': {
+            type:'file',
+            content: './mock/index.json'
         },
-        '/test4': {
-            type: 'REQUEST_GET',
-            content: 'http://www.baidu.com', // 网址，返回get请求的内容
-            options: {
-                data: {
-                    name: '我是发送给对方服务器的参数'
-                }
-            }
-        },
-        '/test5': {
-            type: 'REQUEST_POST',
-            content: 'http://www.cometopostme.com/action.do', // 网址，返回post请求的内容，前提是人家支持获取数据哦
-            options: {
-                data: {
-                    name: '我是发送给对方的数据'
-                }
-            }
-        },
-        '/test6': {
+        '/function': {
             type: 'function',
-            // 可以是函数，如果是函数的会执行函数然后获取结果返回
-            content: async function() {
-                return {}
+            content: function(query) {
+                return '我是一个函数返回的值'
+            }
+        },
+        'get': {
+            type: 'REQUEST_GET',
+            content: 'https://www.baidu.com/',
+            options: {
+                data: {},
+                timeout: 3000,
+                headers: {}
             }
         }
     },
-    controller: './controller',
     templateData: {
         '/template/test.html': function() {
             return {
                 data: {
-                    name: '名字'
+                    userName: '名字'
                 },
                 headers: {}
             }
         }
-    }
+    },
+    controller: './controller'
 });
 
-server.router.get('/kakaka', function() {
-    return '哈哈哈';
+
+server.router.get('/jjj', async function(query) {
+    return 'async'
+});
+server.router.get('/lll', function() {
+    return 'not async';
 });
 
-server.router.post('/hahah', async function() {
-    return 'biubiubiu';
-});
+server.router.get('/getuser', server.controller.getUserName.getname);
 
 server.router.post('/getuse', async function() {
 
@@ -97,6 +90,7 @@ server.router.post('/getuse', async function() {
     
     return result;
 });
+
 
 ```
 
@@ -146,7 +140,7 @@ this.render(absoluteFilePath, data, header)
 
 this.router
 
-> 这个是个router对象，我还想写个control配置项，配置下control的方法，然后router根据字符串名字自动匹配到control
+> 这个是个router对象
 
 this.router.get(url, callback)
 
@@ -192,19 +186,9 @@ this.httpPost(url, {data: {}, timeout: 3000})
 
 ~~this.exec: 执行一些脚本命令，简化一下执行命令行的操作，设想场景是服务器接收到某些请求后，执行某个编译命令~~
 
-this.res
-
-> 这个是nodejs的response对象
-
-this.req
-
-> 这个是nodejs的request对象
-
 
 ### 注意事项：
 
-> 因为是基于koa2实现，并且将koa2的上下文的ctx赋给了 PServer实例，所以一些功能和细节，都可以使用koa的API实现。
+> 因为是基于koa2实现，并且将koa2的上下文的ctx赋给了 PServer实例（server.ctx），所以一些功能和细节，都可以使用koa的API实现。
 
 > 第二点要注意的是，函数都用了async await函数，不过不用也行，还有要注意的是，controller和router的回调函数，都是以返回的值作为响应的值，直接设置ctx的body值并不能生效。
-
-> 不过这样结合，看起来有些怪怪的和乱乱的

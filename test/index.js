@@ -55,6 +55,7 @@ const server = new PServer({
 
 
 server.router.get('/jjj', async function(query) {
+    console.log(this.res);
     return 'async'
 });
 server.router.get('/lll', function() {
