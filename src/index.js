@@ -41,7 +41,7 @@ const middleWare = (pServer) => {
         pServer.ctx = ctx;
 
         // 如果是文件
-        if(isFile) {
+        if(isFile && isPathExist) {
             // 模版解析
             if (templateExtensionName.indexOf(pathExtensionName) >= 0) {
                 // 直接渲染
