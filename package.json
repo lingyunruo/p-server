@@ -3,11 +3,11 @@
   "version": "0.0.1",
   "description": "一个简洁开发服务器",
   "main": "./src/index.js",
-  "scripts": {
-  },
+  "scripts": {},
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
     "ejs": "^2.6.1",
     "koa": "^2.5.2",
     "mime": "^2.3.1"

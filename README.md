@@ -112,8 +112,6 @@ template --> static --> directory --> router --> mock
     - string: 返回字符串
     - object: 返回对象
     - file: 返回模拟数据的文件地址，会require这个文件，拿到文件内容然后返回，所以这个文件必须是nodejs模块，或者json文件
-    - REQUEST_GET: 会去content内的地址模拟`get`请求拿到内容返回，并且会有一个额外的参数，options来代表发送给对方的参数
-    - REQUEST_POST: 回去content内的地址模拟`post`请求拿到内容返回，并且会有一个额外的参数，options来代表发送给对方的参数
     - function: 会执行content的函数，拿到返回值返回，content函数必须是async函数，函数内部this指向PServer实例本身
 
 - controller: 接收一个字符串，这个字符串是你controller的目录地址，服务器会在启动的时候自动读取这个地址里的js文件，然后把文件名字当作key值，挂载到server.controller 对象上，你可以在router里这样使用：

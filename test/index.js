@@ -30,14 +30,6 @@ const server = new PServer({
             content: function(query) {
                 return '我是一个函数返回的值'
             }
-        },
-        'get': {
-            type: 'REQUEST_GET',
-            content: 'https://www.baidu.com/',
-            options: {
-                data: {},
-                timeout: 3000
-            }
         }
     },
     templateData: {
@@ -50,7 +42,12 @@ const server = new PServer({
             }
         }
     },
-    controller: './controller'
+    controller: './controller',
+    proxy: {
+        '/nccloud': 'http://172.20.9.80:6510/',
+        '/get': 'http://www.baidu.com',
+        '/nc': 'http://localhost:3006/nccloud/hrhi/psndoc/PsndocTreeFirstChildAction.do'
+    }
 });
 
 

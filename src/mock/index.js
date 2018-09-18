@@ -41,16 +41,6 @@ module.exports = async function() {
             case 'function':
                 finalReturn = await mockContent.call(this, query);
                 break;
-            case 'REQUEST_GET': 
-                let getResponse = await tool.httpGet(mockContent, mockOptions);
-                finalReturn = getResponse.body;
-                this.ctx.res.writeHead(200, getResponse.headers);
-                break;
-            case 'REQUEST_POST':
-                let postResponse = await tool.httpPost(mockContent, mockOptions);
-                finalReturn = postResponse.body;
-                this.ctx.res.writeHead(200, postResponse.headers);
-                break;
             default: 
                 break;
         }
