@@ -46,15 +46,6 @@ const server = new PServer({
             content: function(query) {
                 return '我是一个函数返回的值'
             }
-        },
-        'get': {
-            type: 'REQUEST_GET',
-            content: 'https://www.baidu.com/',
-            options: {
-                data: {},
-                timeout: 3000,
-                headers: {}
-            }
         }
     },
     templateData: {
@@ -67,7 +58,10 @@ const server = new PServer({
             }
         }
     },
-    controller: './controller'
+    controller: './controller',
+    proxy: {
+        '/get': 'http://www.baidu.com'
+    }
 });
 
 
@@ -125,7 +119,7 @@ server.router.get('/getUser', server.controller.getUser.getName);
 ```
 > 注意：因为router调用方法的时候会自动的将方法的上下文（this）绑定到server，所以如果你用了箭头函数，那么绑定会不成功。
 
-- ~~proxy: 想实现跟webpack-dev-serve一样的proxy功能~~
+- proxy: 基于axios开发
 
 - templateData: 每个模版请求需要的数据，需要对应上模版的请求路径
 
