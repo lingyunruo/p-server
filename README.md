@@ -172,7 +172,7 @@ this.ctx.cookies:
 
 ~~this.httpPost(url, {data: {}, timeout: 3000})~~
 
-~~> 发送一个post请求，url是地址，data是发送的数据，timeout是超时的时间，方法很简陋，有待完善 ~~
+~~> 发送一个post请求，url是地址，data是发送的数据，timeout是超时的时间，方法很简陋，有待完善~~
 
 ~~this.socket: 没实现，实现socket链接~~
 
