@@ -44,9 +44,7 @@ const server = new PServer({
     },
     controller: './controller',
     proxy: {
-        '/nccloud': 'http://172.20.9.80:6510/',
-        '/get': 'http://www.baidu.com',
-        '/nc': 'http://localhost:3006/nccloud/hrhi/psndoc/PsndocTreeFirstChildAction.do'
+        '/get': 'http://www.baidu.com'
     }
 });
 
