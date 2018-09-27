@@ -124,6 +124,25 @@ server.router.get('/getUser', server.controller.getUser.getName);
 - templateData: 每个模版请求需要的数据，需要对应上模版的请求路径
 
 
+### 实例属性
+
+this.config 
+
+> 配置项
+
+this.app
+
+> Koa实例
+
+this.controller
+
+> 定义的controller
+
+this.ctx
+
+> 本次请求的 koa 的ctx 对象
+
+
 ### 实例方法
 
 this.render(absoluteFilePath, data, header)
@@ -153,30 +172,6 @@ this.renderDirectory()
 this.static(staticFileAbsolutePath)
 
 > 这个方法就是给一个静态文件，然后返回静态文件的内容，没有任何特别之处
-
-this.ctx.cookies:
-
-> 因为直接把koa的请求上下文对象挂载到实例上了，所以操作cookie可以直接调用koa的方法
-
-~~this.localStore: 这个方法也没实现，而且在考虑需不需要~~
-
-~~this.readFile: 没实现，读取文件的，嫁接一下fs的read方法，可能会提供异步/同步/promise等方式~~
-
-~~this.writeFile: 没实现，写文件，嫁接下fs的write方法，可能会提供异步/同步/promise等方式~~
-
-~~this.log: 没实现，需要实现错误日志之类的，不过这方面经验欠缺~~
-
-~~this.httpGet(url, {data: {}, timeout: 3000})~~
-
-~~> 发送一个get请求，url是地址，data是发送的数据，timeout是超时的时间，方法很简陋，有待完善~~
-
-~~this.httpPost(url, {data: {}, timeout: 3000})~~
-
-~~> 发送一个post请求，url是地址，data是发送的数据，timeout是超时的时间，方法很简陋，有待完善~~
-
-~~this.socket: 没实现，实现socket链接~~
-
-~~this.exec: 执行一些脚本命令，简化一下执行命令行的操作，设想场景是服务器接收到某些请求后，执行某个编译命令~~
 
 
 ### 注意事项：
