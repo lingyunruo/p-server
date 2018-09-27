@@ -20,11 +20,11 @@ const server = new PServer({
     port: 9000,
     root: __dirname,
     templateExtensionName: ['.html'],
-    // engine: {
-    //     render: async function(content, data) {
-    //         return content;
-    //     }
-    // },
+    engine: {
+        render: async function(content, data) {
+            return content;
+        }
+    },
     mock: {
         '/string': {
             type: 'string',
@@ -119,7 +119,7 @@ server.router.get('/getUser', server.controller.getUser.getName);
 ```
 > 注意：因为router调用方法的时候会自动的将方法的上下文（this）绑定到server，所以如果你用了箭头函数，那么绑定会不成功。
 
-- proxy: 基于axios开发
+- proxy: 基于 koa-proxy 开发，可以实现基本的代理，格式如示例
 
 - templateData: 每个模版请求需要的数据，需要对应上模版的请求路径
 
@@ -166,13 +166,13 @@ this.ctx.cookies:
 
 ~~this.log: 没实现，需要实现错误日志之类的，不过这方面经验欠缺~~
 
-this.httpGet(url, {data: {}, timeout: 3000})
+~~this.httpGet(url, {data: {}, timeout: 3000})~~
 
-> 发送一个get请求，url是地址，data是发送的数据，timeout是超时的时间，方法很简陋，有待完善
+~~> 发送一个get请求，url是地址，data是发送的数据，timeout是超时的时间，方法很简陋，有待完善~~
 
-this.httpPost(url, {data: {}, timeout: 3000})
+~~this.httpPost(url, {data: {}, timeout: 3000})~~
 
-> 发送一个post请求，url是地址，data是发送的数据，timeout是超时的时间，方法很简陋，有待完善 
+~~> 发送一个post请求，url是地址，data是发送的数据，timeout是超时的时间，方法很简陋，有待完善 ~~
 
 ~~this.socket: 没实现，实现socket链接~~
 
