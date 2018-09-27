@@ -9,7 +9,7 @@ const renderDirectory = require('./renderDirectory');
 const Router = require('./router');
 const static = require('./static');
 const mock = require('./mock');
-const proxy = require('./proxy');
+const proxy = require('./proxy-middleware');
 
 const {defaultHeaders} = require('./contants');
 
@@ -41,12 +41,8 @@ const middleWare = (pServer) => {
         // 将koa的ctx挂在到pServer上
         pServer.ctx = ctx;
 
-        // 如果符合代理规则，则直接走代理
-        if(pServer.proxy.isProxyUrl(url, config.proxy)) {
-            await pServer.proxy.proxy.call(this);
-        }
         // 如果是文件
-        else if(isFile && isPathExist) {
+        if(isFile && isPathExist) {
             // 模版解析
             if (templateExtensionName.indexOf(pathExtensionName) >= 0) {
                 // 直接渲染
@@ -94,7 +90,11 @@ function PServer(options = {}) {
         proxy: options.proxy || {}
     };
 
+
+
     this.app = new Koa();
+
+    proxy.call(this);
     this.app.use(middleWare(this));
 
     // 给实例添加方法
@@ -103,7 +103,6 @@ function PServer(options = {}) {
     this.renderDirectory = renderDirectory;
     this.static = static;
     this.mock = mock;
-    this.proxy = proxy(this);
     
     // 如果配置了controller，则初始化controller
     controller.call(this);
