@@ -88,10 +88,6 @@ server.router.post('/getuse', async function() {
 
 ```
 
-### 请求处理优先级顺序
-
-template --> static --> directory --> router --> mock
-
 ### 参数解析：
 
 - port: 监听的端口, 默认值为9000
@@ -165,9 +161,9 @@ this.router.all(url, callback)
 
 > 这个就是不管get还是post请求都会执行
 
-this.renderDirectory()
+this.renderDirectory(ctx.path, absolutePath)
 
-> 这个方法，是根据请求的路径，如果这个路径是个目录，会列出这个目录下的所有文件和文件夹
+> 这个方法，是根据请求的路径和目录的绝对路径，如果这个路径是个目录，会列出这个目录下的所有文件和文件夹
 
 this.static(staticFileAbsolutePath)
 

@@ -18,10 +18,9 @@ catch(e) {
 }
 
 
-module.exports = async function(filePath) {
+module.exports = async function(url, filePath) {
 
     try {
-        const url = this.ctx.path;
 
         let fileList = fs.readdirSync(filePath);
 

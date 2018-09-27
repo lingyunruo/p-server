@@ -55,7 +55,7 @@ const middleWare = (pServer) => {
         }
         // 如果是目录，则输出目录
         else if (isPathExist && pathType === 'directory') {
-            await pServer.renderDirectory(absolutePath);
+            await pServer.renderDirectory(ctx.path, absolutePath);
         }
         else {
             // 路径不存在就走路由处理
