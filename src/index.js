@@ -1,6 +1,7 @@
 const path = require('path');
 const ejs = require('ejs');
 const Koa = require('koa');
+const bodyParser = require('koa-bodyparser');
 
 const tool = require('./tool');
 
@@ -94,7 +95,8 @@ function PServer(options = {}) {
 
     this.app = new Koa();
 
-    proxy.call(this);
+    this.app.use(bodyParser());
+    this.app.use(proxy(this));
     this.app.use(middleWare(this));
 
     // 给实例添加方法

@@ -44,7 +44,10 @@ const server = new PServer({
     },
     controller: './controller',
     proxy: {
-        '/get': 'http://www.baidu.com'
+        '/get': 'https://reactjs.org',
+        '/langdetect': 'https://fanyi.baidu.com/langdetect',
+        '/api': 'http://api.fanyi.baidu.com',
+        '/nccloud': 'http://172.20.9.80:6600/'
     }
 });
 
