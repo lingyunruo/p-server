@@ -24,7 +24,6 @@ module.exports = async function() {
                 fileList.map((file, index) => {
                     let fileName = path.basename(file, '.js');
                     let filePath = path.join(controllerPath, file);
-                    
                     this.controller[fileName] = require(filePath);
                 });
             }

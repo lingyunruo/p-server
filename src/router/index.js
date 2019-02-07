@@ -26,11 +26,15 @@ module.exports = function(pServer) {
 
             for(let i=0;i<callbacksList.length;i++) {
                 let returnValue = await callbacksList[i].call(pServer, query);
-                responseValue.push(returnValue);
+                if(returnValue !== undefined) {
+                    responseValue.push(returnValue);
+                }
             }
-            
-            pServer.ctx.body = responseValue.length === 1 ? responseValue[0] : responseValue;
-            pServer.ctx.type = mime.getType('json');
+
+            if(responseValue.length > 0) {
+                pServer.ctx.body = responseValue.length === 1 ? responseValue[0] : responseValue;
+                pServer.ctx.type = mime.getType('json');
+            }
         }
         else {
             // 此处采用mock
