@@ -21,6 +21,7 @@ module.exports = function(pServer) {
 
         callbacksList.concat(this.callbacks['all'][url] || []);
 
+        // 注册了当前路径的回掉函数
         if(callbacksList && callbacksList.length > 0) {
             let responseValue = [];
 
@@ -35,10 +36,12 @@ module.exports = function(pServer) {
                 pServer.ctx.body = responseValue.length === 1 ? responseValue[0] : responseValue;
                 pServer.ctx.type = mime.getType('json');
             }
+            return true;
         }
         else {
             // 此处采用mock
-            await pServer.mock();
+            // await pServer.mock();
+            return false;
         }
 
     }.bind(this);

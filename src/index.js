@@ -42,26 +42,28 @@ const middleWare = (pServer) => {
         // 将koa的ctx挂在到pServer上
         pServer.ctx = ctx;
 
-        // 如果是文件
-        if(isFile && isPathExist) {
-            // 模版解析
-            if (templateExtensionName.indexOf(pathExtensionName) >= 0) {
-                // 直接渲染
-                await pServer.render(absolutePath, {}, defaultHeaders);
+        let routerResult = await pServer.router.process(absolutePath);
+
+        // 路由最优先
+        if(!routerResult) {
+            // 如果是文件
+            if(isFile && isPathExist) {
+                // 模版解析
+                if (templateExtensionName.indexOf(pathExtensionName) >= 0) {
+                    // 直接渲染
+                    await pServer.render(absolutePath, {}, defaultHeaders);
+                }
+                else {
+                    // 直接读取静态文件
+                    await pServer.static(absolutePath);
+                }
             }
-            else {
-                // 直接读取静态文件
-                await pServer.static(absolutePath);
+            // 如果是目录，则输出目录
+            else if (isPathExist && pathType === 'directory') {
+                await pServer.renderDirectory(ctx.path, absolutePath);
             }
         }
-        // 如果是目录，则输出目录
-        else if (isPathExist && pathType === 'directory') {
-            await pServer.renderDirectory(ctx.path, absolutePath);
-        }
-        else {
-            // 路径不存在就走路由处理
-            await pServer.router.process(absolutePath);
-        }
+        
 
         await next();
     }
