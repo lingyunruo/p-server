@@ -10,7 +10,7 @@ module.exports = function(pServer) {
         all: {}
     };
 
-    this.process = async function(filepath) {
+    this.process = async function(filepath, next) {
         let ctx = pServer.ctx;
 
         let method = ctx.method.toLowerCase();

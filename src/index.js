@@ -62,10 +62,10 @@ const middleWare = (pServer) => {
             else if (isPathExist && pathType === 'directory') {
                 await pServer.renderDirectory(ctx.path, absolutePath);
             }
+            else {
+                await next();
+            }
         }
-        
-
-        await next();
     }
 }
 
@@ -98,7 +98,7 @@ function PServer(options = {}) {
     this.app = new Koa();
 
     this.app.use(bodyParser());
-    this.app.use(proxy(this));
+    // this.app.use(proxy(this));
     this.app.use(middleWare(this));
 
     // 给实例添加方法
