@@ -6,11 +6,11 @@ const server = new PServer({
     port: 9000,
     root: path.join(__dirname, './'),
     templateExtensionName: ['.html'],
-    // engine: {
-    //     render: async function(content, data) {
-    //         return content;
-    //     }
-    // },
+    engine: {
+        render: async function(content, data) {
+            return 'asdfasdf'; 
+        }
+    },
     mock: {
         '/string': {
             type: 'string',
