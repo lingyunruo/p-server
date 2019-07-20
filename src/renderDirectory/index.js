@@ -29,7 +29,7 @@ module.exports = async function(url, filePath) {
         fileList.map((item, index) => {
             result.push({
                 name: item,
-                path: `${url === '/' ? '' : url}/${item}`
+                path: path.normalize(`${url === '/' ? '' : url}/${item}`)
             });
         });
 

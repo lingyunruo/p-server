@@ -1,6 +1,6 @@
 {
   "name": "dono-server",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "一个简洁开发服务器",
   "main": "./src/index.js",
   "scripts": {},
