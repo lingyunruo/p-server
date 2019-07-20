@@ -82,3 +82,8 @@ server.router.post('/proxy/bd', async function() {
         name: '凌云'
     }
 });
+
+
+server.router.get('/redi', async function() {
+    server.ctx.response.redirect('http://www.baidu.com');
+});
