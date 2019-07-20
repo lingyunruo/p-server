@@ -38,7 +38,7 @@ const server = new PServer({
         '/template/test.html': function() {
             return {
                 data: {
-                    userName: '凌云'
+                    userName: 'gfgf'
                 },
                 headers: {}
             }
@@ -46,10 +46,6 @@ const server = new PServer({
     },
     controller: './controller',
     proxy: {
-        "/nccloud": "http://172.20.54.184:6608/",
-        "/ncchr": "http://172.20.54.184:6608/",
-        "/uapbd": "http://172.20.54.184:6608/nccloud/resources/",
-        "/uap": "http://172.20.54.184:6608/nccloud/resources/",
         "/baidu": 'http://www.baidu.com'
     }
 });
@@ -79,7 +75,7 @@ server.router.post('/getuse', async function() {
 server.router.post('/proxy/bd', async function() {
 
     return {
-        name: '凌云'
+        name: 'fff'
     }
 });
 
