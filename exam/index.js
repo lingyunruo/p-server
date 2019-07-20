@@ -1,8 +1,10 @@
 const PServer = require('../src/index.js');
 
+const path = require('path');
+
 const server = new PServer({
     port: 9000,
-    root: __dirname,
+    root: path.join(__dirname, './'),
     templateExtensionName: ['.html'],
     // engine: {
     //     render: async function(content, data) {
@@ -36,7 +38,7 @@ const server = new PServer({
         '/template/test.html': function() {
             return {
                 data: {
-                    userName: '名字'
+                    userName: '凌云'
                 },
                 headers: {}
             }
@@ -44,10 +46,11 @@ const server = new PServer({
     },
     controller: './controller',
     proxy: {
-        '/get': 'https://reactjs.org',
-        '/langdetect': 'https://fanyi.baidu.com/langdetect',
-        '/api': 'http://api.fanyi.baidu.com',
-        '/nccloud': 'http://172.20.9.80:6600/'
+        "/nccloud": "http://172.20.54.184:6608/",
+        "/ncchr": "http://172.20.54.184:6608/",
+        "/uapbd": "http://172.20.54.184:6608/nccloud/resources/",
+        "/uap": "http://172.20.54.184:6608/nccloud/resources/",
+        "/baidu": 'http://www.baidu.com'
     }
 });
 
@@ -71,4 +74,11 @@ server.router.post('/getuse', async function() {
     });
     
     return result;
+});
+
+server.router.post('/proxy/bd', async function() {
+
+    return {
+        name: '凌云'
+    }
 });

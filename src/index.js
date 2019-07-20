@@ -97,8 +97,8 @@ function PServer(options = {}) {
 
     this.app = new Koa();
 
+    this.app.use(proxy(this));
     this.app.use(bodyParser());
-    // this.app.use(proxy(this));
     this.app.use(middleWare(this));
 
     // 给实例添加方法

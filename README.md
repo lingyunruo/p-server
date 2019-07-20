@@ -115,8 +115,6 @@ server.router.get('/getUser', server.controller.getUser.getName);
 ```
 > 注意：因为router调用方法的时候会自动的将方法的上下文（this）绑定到server，所以如果你用了箭头函数，那么绑定会不成功。
 
-- ~proxy: 基于 koa-proxy 开发，可以实现基本的代理，格式如示例~ 暂时不可用
-
 - templateData: 每个模版请求需要的数据，需要对应上模版的请求路径
 
 

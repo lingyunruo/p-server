@@ -46,9 +46,11 @@ module.exports = async function() {
         }
         this.ctx.body = finalReturn;
         this.ctx.status = 200;
+        return true;
     }
     else {
-        this.ctx.body = `${url} not found`;
-        this.ctx.status = 404;
+        // this.ctx.body = `${url} not found`;
+        // this.ctx.status = 404;
+        return false;
     }
 }

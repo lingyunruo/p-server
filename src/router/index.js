@@ -40,8 +40,8 @@ module.exports = function(pServer) {
         }
         else {
             // 此处采用mock
-            // await pServer.mock();
-            return false;
+            let res = await pServer.mock();
+            return res;
         }
 
     }.bind(this);
